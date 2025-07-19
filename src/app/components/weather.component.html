@@ -1,0 +1,60 @@
+<div class="weather-app">
+  <!-- Header -->
+  <header class="app-header">
+    <h1 class="app-title">Weather App</h1>
+    <p class="app-subtitle">Modern weather forecast</p>
+  </header>
+
+  <!-- Search Bar -->
+  <app-search-bar
+    (search)="onSearch($event)"
+    (locationRefresh)="onLocationRefresh()">
+  </app-search-bar>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Loading weather data...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !isLoading">
+    <div class="error-icon">⚠️</div>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="onRefresh()">Try Again</button>
+  </div>
+
+  <!-- Weather Content -->
+  <div class="weather-content" *ngIf="!isLoading && !error">
+    <!-- Current Weather Card -->
+    <app-weather-card
+      [weatherData]="currentWeather"
+      *ngIf="currentWeather">
+    </app-weather-card>
+
+    <!-- Details Toggle Button -->
+    <button class="details-toggle" (click)="toggleDetails()" *ngIf="currentWeather">
+      <span>{{ showDetails ? 'Hide Details' : 'Show Details' }}</span>
+      <span class="toggle-icon">{{ showDetails ? '▲' : '▼' }}</span>
+    </button>
+
+    <!-- Weather Details (Air Quality & UV Index) -->
+    <div class="details-container" [class.show-details]="showDetails" *ngIf="currentWeather">
+      <app-weather-details
+        [airQuality]="airQuality"
+        [uvIndex]="uvIndex">
+      </app-weather-details>
+    </div>
+
+    <!-- Forecast Cards -->
+    <app-forecast-card
+      [forecastData]="forecast"
+      *ngIf="forecast">
+    </app-forecast-card>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Powered by OpenWeatherMap API</p>
+  </footer>
+</div>

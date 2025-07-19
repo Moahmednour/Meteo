@@ -1,0 +1,40 @@
+<div class="forecast-container" *ngIf="forecastData">
+  <!-- Hourly Forecast -->
+  <div class="forecast-card hourly-forecast">
+    <h3 class="forecast-title">Hourly Forecast</h3>
+    <div class="hourly-scroll">
+      <div class="hourly-item" *ngFor="let item of getHourlyForecast()">
+        <div class="hour">{{ getTime(item.dt_txt) }}</div>
+        <img [src]="getWeatherIconUrl(item.weather[0].icon)"
+             [alt]="item.weather[0].description"
+             class="weather-icon">
+        <div class="temp">{{ item.main.temp | number:'1.0-0' }}°</div>
+        <div class="humidity">{{ item.main.humidity }}%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Forecast -->
+  <div class="forecast-card daily-forecast">
+    <h3 class="forecast-title">5-Day Forecast</h3>
+    <div class="daily-list">
+      <div class="daily-item" *ngFor="let item of getDailyForecast()">
+        <div class="day-name">{{ item.dayName }}</div>
+        <div class="weather-info">
+          <img [src]="getWeatherIconUrl(item.weather[0].icon)"
+               [alt]="item.weather[0].description"
+               class="weather-icon">
+          <span class="description">{{ item.weather[0].main }}</span>
+        </div>
+        <div class="temp-range">
+          <span class="temp-high">{{ item.maxTemp | number:'1.0-0' }}°</span>
+          <span class="temp-low">{{ item.minTemp | number:'1.0-0' }}°</span>
+        </div>
+        <div class="details">
+          <span class="humidity">💧 {{ item.main.humidity }}%</span>
+          <span class="wind">💨 {{ item.wind.speed | number:'1.0-1' }}m/s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

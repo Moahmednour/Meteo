@@ -1,0 +1,217 @@
+
+
+.weather-card-header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .city-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: #0f172a;
+    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.1);
+    letter-spacing: -0.025em;
+  }
+
+  .current-time {
+    font-size: 14px;
+    margin: 4px 0 0 0;
+    color: #64748b;
+    font-weight: 500;
+  }
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+
+  .temperature-section {
+    .main-temp {
+      font-size: 72px;
+      font-weight: 200;
+      line-height: 1;
+      color: #0f172a;
+      text-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+    }
+
+    .weather-description {
+      font-size: 18px;
+      margin: 8px 0;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .feels-like {
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 500;
+    }
+  }
+
+  .weather-icon {
+    img {
+      width: 100px;
+      height: 100px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+  }
+}
+
+.weather-details {
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .detail-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    border-radius: 12px;
+    margin: 0 4px;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .detail-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .detail-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+  }
+}
+
+.sun-times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+
+  .sun-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .sun-label {
+      font-size: 14px;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+
+    .sun-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .weather-card {
+    margin: 8px;
+    padding: 16px;
+  }
+
+  .weather-main {
+    flex-direction: column;
+    text-align: center;
+
+    .weather-icon {
+      margin-top: 16px;
+    }
+  }
+
+  .weather-main .temperature-section .main-temp {
+    font-size: 56px;
+  }
+
+  .detail-row {
+    flex-direction: column;
+
+    .detail-item {
+      margin: 4px 0;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.weather-card {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(248, 250, 252, 0.9) 50%,
+    rgba(241, 245, 249, 0.85) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 24px;
+  padding: 24px;
+  color: #1e293b;
+  margin: 16px;
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08),
+    0 8px 16px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s ease-out;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow:
+      0 32px 64px rgba(15, 23, 42, 0.12),
+      0 16px 32px rgba(15, 23, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.3) 50%,
+      transparent 100%);
+    pointer-events: none;
+  }
+}

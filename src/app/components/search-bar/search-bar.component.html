@@ -1,0 +1,62 @@
+<div class="search-container">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="onInputChange()"
+      (keypress)="onKeyPress($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      placeholder="Search for a city..."
+      class="search-input"
+      autocomplete="off">
+
+    <div class="search-loading" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <button
+      type="button"
+      (click)="clearSearch()"
+      class="clear-btn"
+      *ngIf="searchQuery && !isLoading">
+      ✕
+    </button>
+
+    <button
+      type="button"
+      (click)="onSearch()"
+      class="search-btn"
+      [disabled]="!searchQuery.trim() || isLoading">
+      🔍
+    </button>
+
+    <button
+      type="button"
+      (click)="onLocationClick()"
+      class="location-btn"
+      title="Use current location">
+      📍
+    </button>
+  </div>
+
+  <!-- Autocomplete Dropdown -->
+  <div class="suggestions-dropdown" *ngIf="showSuggestions && suggestions.length > 0">
+    <div class="suggestions-header" *ngIf="searchQuery.length < 2">
+      <span class="suggestions-title">Popular Cities</span>
+    </div>
+    <div class="suggestions-list">
+      <button
+        class="suggestion-item"
+        *ngFor="let city of suggestions; index as i"
+        (click)="selectSuggestion(city)"
+        type="button">
+        <div class="suggestion-content">
+          <div class="city-name">{{ city.name }}</div>
+          <div class="city-details">{{ getCityDisplayName(city) }}</div>
+        </div>
+        <div class="suggestion-icon">🌍</div>
+      </button>
+    </div>
+  </div>
+</div>

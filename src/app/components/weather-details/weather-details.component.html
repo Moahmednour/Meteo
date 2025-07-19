@@ -1,0 +1,95 @@
+<div class="weather-details-container">
+  <!-- Air Quality Card -->
+  <div class="detail-card air-quality-card" *ngIf="airQuality">
+    <h3 class="card-title">
+      <span class="card-icon">🌬️</span>
+      Air Quality
+    </h3>
+    <div class="aqi-main">
+      <div class="aqi-value" [style.color]="getAirQualityInfo().color">
+        {{ getAirQualityValue() }}
+      </div>
+      <div class="aqi-level" [style.color]="getAirQualityInfo().color">
+        {{ getAirQualityInfo().level }}
+      </div>
+    </div>
+    <p class="aqi-description">{{ getAirQualityInfo().description }}</p>
+
+    <!-- Pollutant Details -->
+    <div class="pollutants-grid" *ngIf="airQuality.list[0]?.components">
+      <div class="pollutant-item">
+        <span class="pollutant-label">PM2.5</span>
+        <span class="pollutant-value" [style.color]="getPM25Color(airQuality.list[0].components.pm2_5)">
+          {{ airQuality.list[0].components.pm2_5 | number:'1.1-1' }} µg/m³
+        </span>
+      </div>
+      <div class="pollutant-item">
+        <span class="pollutant-label">PM10</span>
+        <span class="pollutant-value">{{ airQuality.list[0].components.pm10 | number:'1.1-1' }} µg/m³</span>
+      </div>
+      <div class="pollutant-item">
+        <span class="pollutant-label">NO₂</span>
+        <span class="pollutant-value">{{ airQuality.list[0].components.no2 | number:'1.1-1' }} µg/m³</span>
+      </div>
+      <div class="pollutant-item">
+        <span class="pollutant-label">O₃</span>
+        <span class="pollutant-value">{{ airQuality.list[0].components.o3 | number:'1.1-1' }} µg/m³</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- UV Index Card -->
+  <div class="detail-card uv-card" *ngIf="uvIndex">
+    <h3 class="card-title">
+      <span class="card-icon">☀️</span>
+      UV Index
+    </h3>
+    <div class="uv-main">
+      <div class="uv-value" [style.color]="getUVInfo().color">
+        {{ uvIndex.value | number:'1.1-1' }}
+      </div>
+      <div class="uv-level" [style.color]="getUVInfo().color">
+        {{ getUVInfo().level }}
+      </div>
+    </div>
+    <p class="uv-description">{{ getUVInfo().description }}</p>
+
+    <!-- UV Scale -->
+    <div class="uv-scale">
+      <div class="scale-bar">
+        <div class="scale-fill" [style.width.%]="(uvIndex.value / 11) * 100" [style.background]="getUVInfo().color"></div>
+      </div>
+      <div class="scale-labels">
+        <span>0</span>
+        <span>5</span>
+        <span>10+</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Recommendations -->
+  <div class="detail-card health-card" *ngIf="airQuality || uvIndex">
+    <h3 class="card-title">
+      <span class="card-icon">🏥</span>
+      Health Recommendations
+    </h3>
+    <div class="recommendations">
+      <div class="recommendation" *ngIf="shouldShowAirQualityWarning()">
+        <span class="rec-icon">😷</span>
+        <span>Consider wearing a mask outdoors</span>
+      </div>
+      <div class="recommendation" *ngIf="uvIndex && uvIndex.value >= 6">
+        <span class="rec-icon">🧴</span>
+        <span>Apply sunscreen SPF 30+</span>
+      </div>
+      <div class="recommendation" *ngIf="uvIndex && uvIndex.value >= 8">
+        <span class="rec-icon">👕</span>
+        <span>Wear protective clothing</span>
+      </div>
+      <div class="recommendation" *ngIf="shouldShowSevereAirQualityWarning()">
+        <span class="rec-icon">🚪</span>
+        <span>Stay indoors if sensitive</span>
+      </div>
+    </div>
+  </div>
+</div>
